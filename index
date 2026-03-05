@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mr. JoA - Master of Flow</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --brand-orange: #FF6B00;
             --brand-black: #0A0A0A;
         }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--brand-black);
             color: white;
             overflow-x: hidden;
+            margin: 0;
         }
 
-        /* Hiệu ứng đường dòng chảy (Flow background) mô phỏng ảnh nền */
+        /* Hiệu ứng dòng chảy mượt mà (Flow Background) */
         .flow-bg {
             position: fixed;
             top: 0;
@@ -26,234 +27,238 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.4;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 107, 0, 0.15) 0%, transparent 50%);
+            background: radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.1) 0%, transparent 40%);
         }
 
         .wave-container {
             position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 80%;
-            height: 60%;
+            bottom: -10%;
+            right: -10%;
+            width: 120%;
+            height: 80%;
             pointer-events: none;
+            opacity: 0.5;
         }
 
-        .wave {
+        .wave-line {
             position: absolute;
             width: 200%;
             height: 100%;
-            background: transparent;
-            border-top: 1px solid rgba(255, 107, 0, 0.3);
-            border-radius: 40%;
-            animation: flow 20s linear infinite;
+            border-top: 1.5px solid rgba(255, 107, 0, 0.3);
+            border-radius: 45%;
+            animation: flow-animation 25s linear infinite;
         }
 
-        @keyframes flow {
+        @keyframes flow-animation {
             from { transform: translateX(0) rotate(0deg); }
-            to { transform: translateX(-50%) rotate(5deg); }
+            to { transform: translateX(-40%) rotate(8deg); }
         }
 
+        /* Typography & Colors */
         .orange-text { color: var(--brand-orange); }
         .orange-bg { background-color: var(--brand-orange); }
-        .border-orange { border-color: var(--brand-orange); }
-
+        
+        /* Glassmorphism Cards */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 107, 0, 0.1);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .glass-card:hover {
             border-color: var(--brand-orange);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            background: rgba(255, 107, 0, 0.05);
+        }
+
+        /* Tái hiện Logo Mr. JoA bằng CSS */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-box {
+            width: 44px;
+            height: 44px;
+            background: black;
+            border: 3px solid white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .logo-j {
+            color: var(--brand-orange);
+            font-weight: 900;
+            font-size: 24px;
+            line-height: 1;
         }
 
         .btn-primary {
             background-color: var(--brand-orange);
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.8rem 2.2rem;
             border-radius: 9999px;
-            font-weight: bold;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
             display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2);
         }
         .btn-primary:hover {
-            box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            box-shadow: 0 15px 30px rgba(255, 107, 0, 0.4);
             transform: scale(1.05);
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        html { scroll-behavior: smooth; }
 
-        .logo-box {
-            width: 45px;
-            height: 45px;
-            background: var(--brand-black);
-            border: 3px solid white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-j {
-            color: var(--brand-orange);
-            font-weight: 900;
-            font-size: 24px;
-            z-index: 2;
-        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--brand-black); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-orange); }
     </style>
 </head>
 <body>
 
     <div class="flow-bg">
         <div class="wave-container" id="waves">
-            <!-- Sẽ được tạo bằng JS để có nhiều đường line -->
+            <!-- Waves generated by JS -->
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md">
-        <div class="flex items-center gap-3">
+    <nav class="fixed w-full z-50 px-6 md:px-12 py-5 flex justify-between items-center bg-black/60 backdrop-blur-md border-b border-white/5">
+        <div class="logo-container">
             <div class="logo-box">
                 <span class="logo-j">J</span>
-                <div class="absolute inset-0 bg-white/10"></div>
             </div>
-            <div class="leading-tight">
-                <div class="font-black text-xl tracking-tighter">Mr. JoA</div>
+            <div class="font-extrabold text-xl tracking-tighter">
+                MR. <span class="orange-text">JOA</span>
             </div>
         </div>
-        <div class="hidden md:flex gap-8 font-medium uppercase text-sm tracking-widest">
-            <a href="#about" class="hover:text-[#FF6B00] transition">Về tôi</a>
-            <a href="#projects" class="hover:text-[#FF6B00] transition">Dự án</a>
-            <a href="#contact" class="hover:text-[#FF6B00] transition">Liên hệ</a>
+        
+        <div class="hidden md:flex gap-10 font-bold text-xs uppercase tracking-widest text-gray-400">
+            <a href="#home" class="hover:text-white transition no-underline">Trang chủ</a>
+            <a href="#about" class="hover:text-white transition no-underline">Về tôi</a>
+            <a href="#services" class="hover:text-white transition no-underline">Dịch vụ</a>
+            <a href="#contact" class="hover:text-white transition no-underline">Kết nối</a>
         </div>
-        <a href="#contact" class="text-sm font-bold border-2 border-orange-500 px-4 py-2 rounded-full hover:bg-orange-600 transition">HỢP TÁC</a>
+
+        <a href="#contact" class="text-xs font-black border-2 border-orange-500 px-5 py-2 rounded-full hover:bg-orange-600 transition-all no-underline text-white">
+            HIRE ME
+        </a>
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col justify-center items-start px-6 md:px-24 relative overflow-hidden">
+    <section id="home" class="min-h-screen flex flex-col justify-center px-6 md:px-24 relative overflow-hidden">
         <div class="max-w-4xl z-10">
-            <h2 class="text-[#FF6B00] font-bold tracking-[0.3em] mb-4 uppercase">Jack of All Trades</h2>
-            <h1 class="text-6xl md:text-9xl font-black mb-6 leading-none">
+            <h2 class="orange-text font-black tracking-[0.4em] mb-6 uppercase text-sm">Creativity in Motion</h2>
+            <h1 class="text-6xl md:text-9xl font-black mb-8 leading-[0.85] tracking-tighter">
                 MASTER <br> OF <span class="orange-text">FLOW.</span>
             </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-                Tối ưu hóa quy trình, khơi nguồn sáng tạo và định hình dòng chảy công việc cho các dự án kỹ thuật số hiện đại.
+            <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-12 leading-relaxed">
+                Tôi là một chuyên gia tối ưu hóa quy trình và thiết kế trải nghiệm kỹ thuật số. Mọi thứ tôi làm đều xoay quanh một mục tiêu duy nhất: <span class="text-white">Sự mượt mà.</span>
             </p>
-            <div class="flex gap-4">
-                <a href="#projects" class="btn-primary">Xem dự án</a>
-                <a href="#about" class="px-8 py-3 rounded-full border border-white/20 hover:bg-white/10 transition">Tìm hiểu thêm</a>
+            <div class="flex flex-wrap gap-5">
+                <a href="#services" class="btn-primary">Xem dịch vụ</a>
+                <a href="#about" class="px-8 py-3 rounded-full border border-white/20 hover:bg-white/5 transition no-underline text-white font-bold">Tìm hiểu thêm</a>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 px-6 md:px-24 bg-white/5">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-            <div class="relative">
-                <div class="aspect-square rounded-2xl overflow-hidden border-2 border-orange-500/30">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Profile" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
-                </div>
-                <div class="absolute -bottom-6 -right-6 w-32 h-32 orange-bg rounded-2xl -z-10"></div>
-            </div>
-            <div>
-                <h3 class="text-4xl font-black mb-6">Xây dựng <span class="orange-text">Hệ sinh thái</span> hiệu quả</h3>
-                <p class="text-gray-400 mb-6 italic">"Không chỉ là làm việc, mà là làm cho công việc vận hành mượt mà nhất có thể."</p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-[2px] orange-bg"></div>
-                        <span>Quản lý dự án Agile & Scrum</span>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-[2px] orange-bg"></div>
-                        <span>Thiết kế trải nghiệm người dùng (UX)</span>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-[2px] orange-bg"></div>
-                        <span>Tự động hóa quy trình doanh nghiệp</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Services Section -->
+    <section id="services" class="py-32 px-6 md:px-24">
+        <div class="mb-20">
+            <h3 class="text-4xl md:text-6xl font-black mb-4 italic tracking-tighter">HỆ SINH THÁI <span class="orange-text">GIÁ TRỊ.</span></h3>
+            <p class="text-gray-500 max-w-lg font-medium">Những giải pháp được thiết kế riêng để tạo nên dòng chảy hoàn hảo cho thương hiệu của bạn.</p>
         </div>
-    </section>
 
-    <!-- Services / Projects -->
-    <section id="projects" class="py-24 px-6 md:px-24">
-        <div class="text-center mb-16">
-            <h3 class="text-5xl font-black mb-4">DỊCH VỤ <span class="orange-text">&</span> DỰ ÁN</h3>
-            <p class="text-gray-500">Những giải pháp tối ưu dòng chảy cho khách hàng toàn cầu</p>
-        </div>
         <div class="grid md:grid-cols-3 gap-8">
-            <div class="glass-card p-8 rounded-2xl">
-                <div class="text-4xl mb-6">⚡</div>
-                <h4 class="text-xl font-bold mb-4">Workflow Automation</h4>
-                <p class="text-gray-400">Tự động hóa các tác vụ lặp đi lặp lại để đội ngũ tập trung vào giá trị cốt lõi.</p>
+            <div class="glass-card p-10">
+                <div class="text-orange-500 text-4xl mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h4 class="text-2xl font-bold mb-4">Digital Strategy</h4>
+                <p class="text-gray-500 text-sm leading-relaxed">Xác định lộ trình phát triển và định hình dòng chảy thương hiệu trên không gian số.</p>
             </div>
-            <div class="glass-card p-8 rounded-2xl border-t-4 border-t-[#FF6B00]">
-                <div class="text-4xl mb-6">🎨</div>
-                <h4 class="text-xl font-bold mb-4">Digital Strategy</h4>
-                <p class="text-gray-400">Chiến lược phát triển sản phẩm kỹ thuật số từ ý tưởng đến khi ra mắt thị trường.</p>
+
+            <div class="glass-card p-10 border-t-4 border-t-orange-500">
+                <div class="text-orange-500 text-4xl mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    </svg>
+                </div>
+                <h4 class="text-2xl font-bold mb-4">UX Optimization</h4>
+                <p class="text-gray-500 text-sm leading-relaxed">Tối ưu hóa trải nghiệm người dùng, đảm bảo mọi tương tác đều tự nhiên và mượt mà nhất.</p>
             </div>
-            <div class="glass-card p-8 rounded-2xl">
-                <div class="text-4xl mb-6">🚀</div>
-                <h4 class="text-xl font-bold mb-4">Performance Optimization</h4>
-                <p class="text-gray-400">Tối ưu hóa hiệu năng hệ thống và quy trình làm việc của doanh nghiệp.</p>
+
+            <div class="glass-card p-10">
+                <div class="text-orange-500 text-4xl mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 00-1 1v1a2 2 0 11-4 0v-1a1 1 0 00-1-1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                    </svg>
+                </div>
+                <h4 class="text-2xl font-bold mb-4">Process Flow</h4>
+                <p class="text-gray-500 text-sm leading-relaxed">Xây dựng hệ thống tự động hóa quy trình, giúp doanh nghiệp vận hành không rào cản.</p>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 px-6 md:px-24">
-        <div class="orange-bg p-12 rounded-[3rem] text-black flex flex-col md:flex-row justify-between items-center gap-8">
-            <div>
-                <h3 class="text-4xl md:text-6xl font-black mb-4">Bắt đầu dòng chảy mới?</h3>
-                <p class="text-black/70 font-medium">Hãy cùng thảo luận về cách chúng ta có thể làm cho dự án của bạn mượt mà hơn.</p>
-            </div>
-            <a href="mailto:hello@mrjoa.com" class="bg-black text-white px-12 py-5 rounded-full font-bold text-xl hover:scale-110 transition">LIÊN HỆ NGAY</a>
+    <!-- Contact CTA -->
+    <section id="contact" class="py-32 px-6 md:px-24">
+        <div class="orange-bg rounded-[3rem] p-12 md:p-20 text-black text-center relative overflow-hidden group">
+            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+            <h3 class="text-5xl md:text-7xl font-black mb-8 italic tracking-tighter">BẮT ĐẦU DÒNG CHẢY?</h3>
+            <p class="text-black/70 font-bold text-lg mb-12 max-w-xl mx-auto uppercase tracking-wider">Hợp tác để cùng kiến tạo những giá trị vượt thời gian.</p>
+            <a href="mailto:hello@mrjoa.com" class="bg-black text-white px-12 py-5 rounded-full font-black text-xl hover:scale-110 transition-transform inline-block no-underline">LIÊN HỆ VỚI TÔI</a>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-gray-600 text-sm">
-        <p>© 2024 Mr. JoA. Jack of All, Master of Flow.</p>
+    <footer class="py-12 px-6 md:px-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-gray-600 text-[10px] font-black uppercase tracking-[0.2em]">
+        <p>© 2024 MR. JOA • JACK OF ALL TRADES</p>
+        <div class="flex gap-8 mt-6 md:mt-0">
+            <a href="#" class="hover:text-orange-500 transition no-underline">LinkedIn</a>
+            <a href="#" class="hover:text-orange-500 transition no-underline">Facebook</a>
+            <a href="#" class="hover:text-orange-500 transition no-underline">Behance</a>
+        </div>
     </footer>
 
     <script>
-        // Tạo các đường line uốn lượn (Waves) giống trong ảnh nền
+        // Tạo các đường line uốn lượn động (Dynamic Flow Waves)
         const container = document.getElementById('waves');
-        const waveCount = 15;
-
-        for (let i = 0; i < waveCount; i++) {
-            const wave = document.createElement('div');
-            wave.className = 'wave';
-            
-            // Randomize vị trí và độ trễ để tạo cảm giác tự nhiên
-            const bottomPos = i * 15;
-            const opacity = 1 - (i / waveCount);
-            const delay = i * 0.5;
-            
-            wave.style.bottom = `${bottomPos}px`;
-            wave.style.opacity = (opacity * 0.2).toString();
-            wave.style.animationDelay = `-${delay}s`;
-            wave.style.borderTopColor = `rgba(255, 107, 0, ${opacity})`;
-            
-            container.appendChild(wave);
+        if (container) {
+            const lineCount = 18;
+            for (let i = 0; i < lineCount; i++) {
+                const wave = document.createElement('div');
+                wave.className = 'wave-line';
+                
+                const bottomPos = i * 20;
+                const opacity = 1 - (i / lineCount);
+                const delay = i * 0.7;
+                
+                wave.style.bottom = `${bottomPos}px`;
+                wave.style.opacity = (opacity * 0.25).toString();
+                wave.style.animationDelay = `-${delay}s`;
+                wave.style.borderTopColor = `rgba(255, 107, 0, ${opacity})`;
+                
+                container.appendChild(wave);
+            }
         }
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+        // Hiệu ứng di chuyển nhẹ khi cuộn chuột
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const waves = document.getElementById('waves');
+            if (waves) {
+                waves.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
         });
     </script>
 </body>
